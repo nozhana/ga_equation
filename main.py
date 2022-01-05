@@ -18,7 +18,7 @@ nsols = 8
 low, high = -4.0, 4.0
 
 # Number of generations to run
-ngens = 50
+ngens = 20
 
 # Number of mating parents to extract
 nparents = 4
@@ -58,6 +58,13 @@ for gen in range(1, ngens+1):
     print(np.max(ga.pop_fitness(xvalues, new_pop)))
     print('\n\n')
 
-print('BEST SOLUTION AFTER {} GENS:\n'.format(ngens))
-print(new_pop[ga.pop_fitness(xvalues, new_pop).argsort()[-1]])
-print('\n\n')
+    if np.any(np.all(new_pop % high == 0.0, axis=1)):
+        print('BEST SOLUTION AFTER {} GENS:\n'.format(gen))
+        print(new_pop[ga.pop_fitness(xvalues, new_pop).argsort()[-1]])
+        print('\n\n')
+        break
+else:
+    print('NO DEFINITE SOLUTION FOUND!')
+    print('BEST SOLUTION AFTER {} GENS:\n'.format(ngens))
+    print(new_pop[ga.pop_fitness(xvalues, new_pop).argsort()[-1]])
+    print('\n\n')
